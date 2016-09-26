@@ -1,0 +1,33 @@
+--------ASSUMPTIONS--------
+
+	This project assumes that:
+1. VirtualBox is installed at host machine;
+1. virtual machine name is "win7";
+2. virtual machine guest OS will login automatically, without password or login selection;
+3. virtual machine will complete booting in 3 minutes;
+
+	All three parameters defined as constants at the beginning of main function. Virtual machine name also can be set via run parameter.
+
+
+--------DEBUG AND RELEASE CONFIGURATIONS--------
+
+	In Release configuration program will hide:
+- itself from the screen;
+- itself from running application list;
+- virtual machine from the screen;
+- virtual machine from running application list;
+However, all processes created by program will be visible in 'Processes' tab in Windows Task Manager.
+
+	To watch the VM's guest operating system state in Release configuration, you can launch VirtualBox Manager, select virtual machine from the list and take a look at the 'Preview' panel at the right of the window. Picture there will refresh once a second. To shutdown virtual machine you can go to VirtualBox manager main menu and select Machine -> Close -> Power Off.
+
+	In Debug configuration nothing will be suppressed and extra messages will be shown in console window for debugging purposes.
+
+
+--------SOFTWARE--------
+
+	Both host and guest operating systems in my tests was freshly installed Windows 7 Professional SP1 (32-bit). VirtualBox version was 4.3.20. Project was made in Visual Studio 2012 11.0 Visual C++ environment.
+
+
+--------RESEARCH--------
+
+	Research results described in research\description.txt file.

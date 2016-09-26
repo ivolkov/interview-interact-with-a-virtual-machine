@@ -1,0 +1,31 @@
+--------INTERACTING WITH VIRTUALBOX--------
+
+	In short, there are 3 ways to access VirtualBox API (Application Programming Interface).
+
+	1. Web service. It ships in a stand-alone executable (vboxwebsrv.exe) that, when running, acts as an HTTP server, accepts SOAP connections and processes them.
+	Pro: easy to use with Java and Python with the object-oriented web service; extensive support even with other languages (C++, .NET, PHP, Perl and others).
+	Pro: client can be on remote machine.
+	Con: Significant overhead due to XML marshalling over the wire for each method call.
+
+	2. Component Object Model (COM/XPCOM). It's an interprocess mechanism for software components originally introduced by Microsoft for Microsoft Windows. The VirtualBox front-ends (the graphical user interfaces as well as the command line) use COM/XPCOM to call the Main API.
+	Pro: Relatively low invocation overhead.
+	Con: Usable from languages where COM bridge available (most languages on Windows platform, Python and C++ on other hosts).
+	Con: Client must be on the same host where virtual machine is executed.
+
+	3. Command Line Interface (Used in this project due to task simplicity). It ships in a stand-alone executable (vboxmanage.exe) that accepts API calls as a commands with parameters.
+	Pro: Usable from virtually any language where native OS API calls are available. Also usable in scripts.
+	Con: Client must be on the same host where virtual machine is executed.
+
+	Documents:
+1. Full VirtualBox API guide: VBoxSDKRef.pdf (online: http://download.virtualbox.org/virtualbox/SDKRef.pdf)
+2. VirtualBox Command Line Interface: chapter 8 of manual (http://www.virtualbox.org/manual/ch08.html)
+
+--------GENERATING KEYBOARD EVENTS SEQUENCE--------
+
+	In order to send keyboard events to VirtualBox API, a sequence of hexadecimal values needs to be generated. See Keyboard Scan Code Specification included in scancodes.doc file. Scan code table is at page 16.
+	In short, every key can generate two scan codes (events): Key_Press and Key_Release. This scan codes represented as a hexadecimal values. For example, to call Windows Run Dialog, keys Win+R needs to be pressed. In terms of scan codes, this will be "Win_Press, R_Press, R_Release, Win_Release", or "e0 5b 13 93 e0 db" in hexadecimal according to scancodes.doc file.
+	To execute sequence of scan codes at virtual machine, user can execute command "vboxmanage.exe controlvm <VirtualMachineName | UUID> keyboardputscancode <hex codes>".
+
+	Documents:
+1. Keyboard Scan Code Specification: scancodes.doc (online: http://download.microsoft.com/download/1/6/1/161ba512-40e2-4cc9-843a-923143f3456c/scancode.doc
+)
